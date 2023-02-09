@@ -1,0 +1,49 @@
+#include <iostream>
+
+using namespace std;
+
+class Square {
+private:
+	int side;
+public:
+	Square() {
+		this->side = 0;
+		cout << "Constructor started" << endl;
+	}
+	Square(int side) {
+		this->side = side;
+		cout << "Constructor started" << endl;
+	}
+
+	int getSide() {
+		return this->side;
+	}
+
+	void setSide(int side) {
+		this->side = side;
+	}
+
+	int getVolue() {
+		return this->side*this->side;
+	}
+
+	void print_sqr() {
+		cout << "Side = " << this->side << endl << "Volume = " << this->getVolue() << endl;
+	}
+	~Square() {
+		cout << "Destructor started" << endl;
+	}
+};
+
+
+
+
+
+int main() {
+	Square a = Square(5);
+	Square a1 = Square(2);
+	Square a2 = Square(10);
+	a.print_sqr();
+	a1.print_sqr();
+	a2.print_sqr();
+}
