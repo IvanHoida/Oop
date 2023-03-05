@@ -1,0 +1,77 @@
+#include <list>
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+class Student {
+private:
+	string surname;
+	string name;
+	double ScoreMath;
+	double ScorePhysics;
+	double ScoreInformatics;
+	double ScoreAvg;
+public:
+	Student(string Surname, string Name, double M, double P, double I) {
+		this->surname = Surname;
+		this->name = Name;
+		this->ScoreMath = M;
+		this->ScorePhysics = P;
+		this->ScoreInformatics = I;
+		this->ScoreAvg = (this->ScoreMath + this->ScorePhysics + this->ScoreInformatics) / 3;
+	}
+
+	//Дружня функція рядкове представлення обєкту
+	friend ostream& operator<<(ostream& out, const Student& obj) {
+		out << obj.surname << " " << obj.name << " " << obj.ScoreMath << " " << obj.ScorePhysics << " " << obj.ScoreInformatics << endl;
+		return out;
+	}
+
+	double GetMath() {
+		return this->ScoreMath;
+	}
+
+	double GetPhysics() {
+		return this->ScorePhysics;
+	}
+
+	double GetInformatics() {
+		return this->ScoreInformatics;
+	}
+
+	//Метод який переписує оператор порівняння(.sort)
+	bool operator <(const Student& obj) {
+		return this->ScoreAvg < obj.ScoreAvg;
+	}
+};
+
+int main() {
+	list<Student> St;
+	ifstream in;
+	string surname;
+	string name;
+	double ScoreMath;
+	double ScorePhysics;
+	double ScoreInformatics;
+	in.open("data.txt");
+	while(!in.eof()){
+		in >> surname >> name >> ScoreMath >> ScorePhysics >> ScoreInformatics;
+		Student Tmp(surname, name, ScoreMath, ScorePhysics, ScoreInformatics);
+		St.push_back(Tmp);
+	}
+	St.sort();
+	double Score[3] = {0,0,0};
+	for (Student i : St) {
+		cout << i;
+		Score[0] += i.GetMath();
+		Score[1] += i.GetPhysics();
+		Score[2] += i.GetInformatics();
+	}
+	double AvarageMath = Score[0] / St.size();
+	double AvaragePhysics = Score[1] / St.size();
+	double AvarageInformatics = Score[2] / St.size();
+	cout << "Average Score" << endl;
+	cout << "Math = " << AvarageMath << " Physics = " << AvaragePhysics << " Informatics =" << AvarageInformatics << endl;
+	in.close();
+}
