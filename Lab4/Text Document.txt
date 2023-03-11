@@ -1,0 +1,32 @@
+#include <iostream>
+
+using namespace std;
+
+class Num {
+private:
+    double a[15];
+public:
+    Num() {
+        for (int i=0; i < 15; i++) {
+            this->a[i] = (i % 2 == 0) ? (i + 4.1) : (i - 1.0);
+        }
+    }
+    double*GetA() {
+        return this->a;
+    }
+};
+
+double SumA(Num a){
+    double sum=0;
+    double*b = a.GetA();
+    for (int i = 2; i < 15; i += 2) {
+        sum += b[i];
+    }
+    return sum;
+}
+
+
+int main()
+{
+    cout << "Sum: " << SumA(Num())<<endl;
+}
