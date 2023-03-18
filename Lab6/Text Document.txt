@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+class Person {
+private:
+	int Age;
+public:
+	Person(int Age) { this->Age = Age; }
+	~Person(){}
+	int GetAge() { return this->Age; }
+};
+
+class Student : public Person {
+private:
+	float MarkAvg;
+public:
+	Student(int Age, float MarkAvg) :Person(Age) { this->MarkAvg = MarkAvg; }
+	~Student(){}
+	float GetMarkAvg() { return this->MarkAvg; }
+};
+
+class Teacher : public Person {
+private:
+	string Lesson;
+public:
+	Teacher(int Age, string Lesson) :Person(Age) { this->Lesson = Lesson; }
+	~Teacher(){}
+	string GetLesson() { return this->Lesson; }
+};
+
+class Director : public Teacher {
+private:
+	string Facultet;
+public:
+	Director(int Age, string Lesson, string Facultet) :Teacher(Age, Lesson) { this->Facultet = Facultet; }
+	~Director(){}
+	string GetFacultet() { return this->Facultet; }
+};
+
+
+int main()
+{
+	Person person = Person(25);
+	Student student = Student(19,91.5);
+	Teacher teacher = Teacher(35,"Math");
+	Director director = Director(48, "OOP", "Information Technology");
+	cout << "Person age: " << person.GetAge() << endl;
+	cout << "Student age: " << student.GetAge() << "\t\tMark avarage: " << student.GetMarkAvg() << endl;
+	cout << "Teacher age: " << teacher.GetAge() << "\t\tLesson: " << teacher.GetLesson() << endl;
+	cout << "Director age: " << director.GetAge() << "\tLesson: " << director.GetLesson() << "\t\tFacultet: " << director.GetFacultet() << endl;
+}
