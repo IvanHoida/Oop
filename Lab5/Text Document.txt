@@ -1,0 +1,69 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+class Square {
+private:
+    float a;
+    float volume;
+public:
+    Square() {
+        this->a=0;
+        this->volume = 0;
+    }
+    Square(float a) {
+        this->a = a;
+        this->volume = pow(a,2);
+    }
+    float GetSideA() {
+        return this->a;
+    }
+    float GetVolume() {
+        return this->volume;
+    }
+    void SetSideA(float a) {
+        this->a = a;
+        this->volume = pow(a, 2);
+    }
+
+
+    Square operator +(Square& obj) {
+        Square b(sqrt(this->GetVolume()+obj.GetVolume()));
+        return b;
+    }
+    Square operator ++() {
+        this->a++;
+        this->volume = pow(this->a, 2);
+        return *this; 
+    }
+
+    Square operator ++(int notused) {
+        Square t = *this;
+        this->a++;
+        this->volume = pow(this->a, 2);
+        return t;
+    }
+    friend ostream& operator << (ostream& t, Square& obj);
+};
+
+ostream& operator << (ostream& t, Square& obj) {
+    t << "Side : " << obj.a << "\tVolume: " << obj.GetVolume();
+    return t;
+}
+
+int main()
+{
+    Square x = Square(5);
+    Square y = Square(3);
+    Square u = x + y;
+    cout << "x :\t" << x << endl;
+    cout << "y :\t" << y << endl;
+    cout << "x+y :\t" << u << endl;
+
+    Square j = x++;
+    cout << "x++ :\t" << j << endl;
+
+    Square i = ++y;
+    cout << "++y :\t" << i << endl;
+}
