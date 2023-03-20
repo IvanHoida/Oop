@@ -1,0 +1,63 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+class Figure {
+private:
+	float side;
+	float high;
+public:
+	Figure(float side, float high) {
+		this->side = side;
+		this->high = high;
+	}
+	float GetSide(){
+		return this->side;
+	}
+	float GetHigh() {
+		return this->high;
+	}
+	float virtual GetVolume()=0;
+};
+
+class Triangle :public Figure {
+public:
+	Triangle(float side, float high):Figure(side,high){}
+	float GetVolume() {
+		float a = 0.5 * this->GetSide() * this->GetHigh();
+		return a;
+	}
+};
+
+class EquilateralTriangle :public Figure {
+public:
+	EquilateralTriangle(float side, float high) :Figure(side, high) {}
+	float GetVolume() {
+		float a = (pow(this->GetSide(), 2) * sqrt(3)) / 4;
+		return a;
+	}
+};
+
+class Trapezoid :public Figure {
+public:
+	Trapezoid(float side, float high) :Figure(side, high) {}
+	float GetVolume() {
+		float a = this->GetSide() * this->GetHigh();
+		return a;
+	}
+};
+
+int main()
+{
+	string X[3] = { "Triangle: ","EquilateralTriangle: ","Trapezoid: " };
+	Figure* A[3];
+	Triangle B(2.0,3.0);
+	EquilateralTriangle C(4.0,0.0);
+	Trapezoid D(5.0,1.0);
+	A[0] = &B;
+	A[1] = &C;
+	A[2] = &D;
+	for (int i = 0; i < 3; i++) {
+		cout << X[i] << A[i]->GetVolume() << endl;
+	}
+}
