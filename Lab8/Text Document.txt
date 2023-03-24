@@ -1,0 +1,94 @@
+#include <iostream>
+using namespace std;
+
+//Шаблон функції
+template <typename T>       
+
+class Array {
+private:
+    int size;
+    T* data;
+public:
+    Array(int size) {
+        this->size = size;
+        this->data = new T[size];
+    }
+
+    // Конструктор копіювання
+    Array(const Array& other) {
+        this->size = other.size;
+        this->data = new T[this->size];
+        for (int i = 0; i < this->size; i++) {
+            this->data[i] = other.data[i];
+        }
+    }
+
+    // Деструктор даних
+    ~Array() {
+        delete[] this->data;
+    }
+
+    // операція «<<» перевантажена: виводить на екран масив
+    friend ostream& operator<<(ostream& os, const Array<T>& array) {
+        for (int i = 0; i < array.size; i++) {
+            os << array.data[i] << " ";
+        }
+        return os;
+    }
+
+    // операція «==» перевантажена: порівняння двох масивів
+    bool operator==(const Array<T>& other) const {
+        if (this->size != other.size) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (this->data[i] != other.data[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // операція «[]» перевантажена: доступ до елементів масиву
+    T& operator[](int index) {
+        return this->data[index];
+    }
+  
+};
+
+int main() {
+    int size1 = 5, size2 = 4;
+    Array<int> myArray(size1);
+    for (int i = 0; i < size1; i++) {
+        int a = i + 1;
+        myArray[i] = a;
+    }
+
+    cout << "My array: " << myArray << endl;
+
+    Array<int> equalArray(size1);
+    for (int i = 0; i < size1; i++) {
+        int a = i + 1;
+        equalArray[i] = a;
+    }
+
+    if (myArray == equalArray) {
+        cout << "Arrays are equal." << endl;
+    }
+    else {
+        cout << "Arrays are not equal." << endl;
+    }
+
+    Array<int> differentArray(size2);
+    for (int i = 0; i < size2; i++) {
+        int a = i + 1;
+        differentArray[i] = a;
+    }
+
+    if (myArray == differentArray) {
+        cout << "Arrays are equal." << endl;
+    }
+    else {
+        cout << "Arrays are not equal." << endl;
+    }
+}
